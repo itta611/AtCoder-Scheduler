@@ -5,7 +5,7 @@ const https = require('https');
 const jsdom = require('jsdom');
 const cron = require('node-cron');
 const atcoderURL = 'https://atcoder.jp/contests/?lang=en';
-const CHANNEL_ID = '958575959714451528';
+const CHANNEL_ID = '967640727142146060';
 const SERVER_ID = '946371427202908180';
 let channel;
 setSchedule();
@@ -28,7 +28,7 @@ function setSchedule() {
         const contestScheduleTime = new Date(
           item.querySelector('time').textContent
         );
-        contestScheduleTime.setHours(contestScheduleTime.getHours() - 1);
+        contestScheduleTime.setMinutes(contestScheduleTime.getMinutes() - 30);
         const contestTitle = item
           .querySelectorAll('td')[1]
           .querySelector('a').textContent;
