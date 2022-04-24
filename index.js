@@ -8,9 +8,9 @@ const atcoderURL = 'https://atcoder.jp/contests/?lang=en';
 const CHANNEL_ID = '946371427202908183';
 const SERVER_ID = '946371427202908180';
 let channel;
-setSchedule();
+setSchedule(0);
 
-function setSchedule() {
+function setSchedule(index) {
   return new Promise((resolve, reject) => {
     https.get(atcoderURL, (res) => {
       let data = '';
@@ -21,9 +21,9 @@ function setSchedule() {
         let scheduleList = [];
         const { window } = new jsdom.JSDOM(data);
         const document = window.document;
-        const item = document.querySelector(
+        const item = document.querySelectorAll(
           '#contest-table-upcoming tbody > tr'
-        );
+        )[index];
 
         const contestScheduleTime = new Date(
           item.querySelector('time').textContent
@@ -55,7 +55,7 @@ function setSchedule() {
               name: schedule.contestShortTitle.toLowerCase(),
               reason: `${schedule.contestTitle} is comming!`,
             });
-            setSchedule();
+            setSchedule(1);
             client.guilds.cache
               .get(SERVER_ID)
               .members.cache.forEach(async (member) => {
