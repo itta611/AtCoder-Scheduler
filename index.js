@@ -52,7 +52,7 @@ function setSchedule(index) {
             currentTask.stop();
             channel.send(`@everyone ${schedule.contestTitle} is comming!`);
             const thread = await channel.threads.create({
-              name: schedule.contestShortTitle.toLowerCase(),
+              name: schedule.contestShortTitle,
               reason: `${schedule.contestTitle} is comming!`,
             });
             setSchedule(1);
@@ -62,7 +62,9 @@ function setSchedule(index) {
                 await thread.members.add(member.user.id);
               });
             channel.send(
-              `:regional_indicator_a: https://atcoder.jp/contests/${schedule.contestShortTitle}/tasks/${schedule.contestShortTitle}_a`
+              `:regional_indicator_a: https://atcoder.jp/contests/${schedule.contestShortTitle.toLowerCase()}/tasks/${
+                schedule.contestShortTitle
+              }_a`
             );
           }
         );
