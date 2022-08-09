@@ -25,7 +25,6 @@ function setSchedule(index) {
 
         const contestScheduleTime = new Date(item.querySelector('time').textContent);
         contestScheduleTime.setMinutes(contestScheduleTime.getMinutes() - 30);
-        console.log(contestScheduleTime);
         const contestTitle = item.querySelectorAll('td')[1].querySelector('a').textContent;
         const contestShortTitle = item
           .querySelectorAll('td')[1]
