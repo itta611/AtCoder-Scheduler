@@ -21,17 +21,12 @@ function setSchedule(index) {
         let scheduleList = [];
         const { window } = new jsdom.JSDOM(data);
         const document = window.document;
-        const item = document.querySelectorAll(
-          '#contest-table-upcoming tbody > tr'
-        )[index];
+        const item = document.querySelectorAll('#contest-table-upcoming tbody > tr')[index];
 
-        const contestScheduleTime = new Date(
-          item.querySelector('time').textContent
-        );
-        contestScheduleTime.setMinutes(contestScheduleTime.getMinutes() - 15);
-        const contestTitle = item
-          .querySelectorAll('td')[1]
-          .querySelector('a').textContent;
+        const contestScheduleTime = new Date(item.querySelector('time').textContent);
+        contestScheduleTime.setMinutes(contestScheduleTime.getMinutes() - 30);
+        console.log(contestScheduleTime);
+        const contestTitle = item.querySelectorAll('td')[1].querySelector('a').textContent;
         const contestShortTitle = item
           .querySelectorAll('td')[1]
           .querySelector('a')
@@ -46,28 +41,23 @@ function setSchedule(index) {
           contestShortTitle,
           contestScheduleTimeFormated,
         };
-        let currentTask = cron.schedule(
-          schedule.contestScheduleTimeFormated,
-          async () => {
-            currentTask.stop();
-            channel.send(`@everyone ${schedule.contestTitle} is comming!`);
-            const thread = await channel.threads.create({
-              name: schedule.contestShortTitle,
-              reason: `${schedule.contestTitle} is comming!`,
-            });
-            setSchedule(1);
-            client.guilds.cache
-              .get(SERVER_ID)
-              .members.cache.forEach(async (member) => {
-                await thread.members.add(member.user.id);
-              });
-            channel.send(
-              `:regional_indicator_a: https://atcoder.jp/contests/${schedule.contestShortTitle.toLowerCase()}/tasks/${
-                schedule.contestShortTitle
-              }_a`
-            );
-          }
-        );
+        let currentTask = cron.schedule(schedule.contestScheduleTimeFormated, async () => {
+          currentTask.stop();
+          channel.send(`@everyone ${schedule.contestTitle} is comming!`);
+          const thread = await channel.threads.create({
+            name: schedule.contestShortTitle,
+            reason: `${schedule.contestTitle} is comming!`,
+          });
+          setSchedule(1);
+          client.guilds.cache.get(SERVER_ID).members.cache.forEach(async (member) => {
+            await thread.members.add(member.user.id);
+          });
+          channel.send(
+            `:regional_indicator_a: https://atcoder.jp/contests/${schedule.contestShortTitle.toLowerCase()}/tasks/${
+              schedule.contestShortTitle
+            }_a`
+          );
+        });
         scheduleList.push(schedule);
       });
     });
