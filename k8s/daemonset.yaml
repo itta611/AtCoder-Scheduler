@@ -18,3 +18,5 @@ spec:
         - name: atcoder-scheduler
           image: itta/atcoder-scheduler:latest
           imagePullPolicy: Always
+          ports:
+            - containerPort: 80
