@@ -6,6 +6,7 @@ RUN npm install
 FROM node:alpine
 WORKDIR /app
 COPY --from=builder /app .
+ARG TOKEN
+ENV TOKEN=${TOKEN}
 RUN npm install --production
-EXPOSE 3000
 CMD ["npm", "start"]
