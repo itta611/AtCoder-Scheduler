@@ -1,15 +1,21 @@
-apiVersion: v1
-kind: Service
+apiVersion: apps/v1
+kind: DaemonSet
 metadata:
-  name: atcoder-scheduler
+  name: atcoder-scheduler-daemonset
+  labels:
+    app: atcoder-scheduler
 spec:
   selector:
-    app: atcoder-scheduler
+    matchLabels:
+      app: atcoder-scheduler
   template:
     metadata:
       labels:
         app: atcoder-scheduler
     spec:
       containers:
-        - name: atcoder-scheduler-container
-          image: atcoder-scheduler-image
+        - name: atcoder-scheduler
+          image: itta/atcoder-scheduler:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
