@@ -13,6 +13,7 @@ spec:
       labels:
         app: atcoder-scheduler
     spec:
+      dnsPolicy: 'Default'
       containers:
         - name: atcoder-scheduler
           image: itta/atcoder-scheduler:latest
