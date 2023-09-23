@@ -1,13 +1,16 @@
 const { Client, Intents } = require('discord.js');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
-const { token } = require('./config.json');
 const https = require('https');
 const jsdom = require('jsdom');
 const cron = require('node-cron');
+const path = require('path');
 const atcoderURL = 'https://atcoder.jp/contests/?lang=en';
 const CHANNEL_ID = '946371427202908183';
 const SERVER_ID = '946371427202908180';
+const ENV_PATH = path.join(__dirname, '.env');
+require('dotenv').config({ path: ENV_PATH });
 let channel;
+
 setSchedule(0);
 
 function setSchedule(index) {
@@ -67,4 +70,4 @@ client.on('ready', () => {
   channel = client.channels.cache.get(CHANNEL_ID);
 });
 
-client.login(token);
+client.login(process.env.TOKEN);

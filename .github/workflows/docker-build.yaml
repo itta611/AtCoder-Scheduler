@@ -32,3 +32,5 @@ jobs:
           push: true
           tags: itta/atcoder-scheduler:latest
           platforms: ${{ matrix.platform }}
+          build-args: |
+            "TOKEN=${{ secrets.DISCORD_TOKEN }}"
