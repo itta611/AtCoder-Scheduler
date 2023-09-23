@@ -5,4 +5,11 @@ metadata:
 spec:
   selector:
     app: atcoder-scheduler
-  type: ClusterIP
+  template:
+    metadata:
+      labels:
+        app: atcoder-scheduler
+    spec:
+      containers:
+        - name: atcoder-scheduler-container
+          image: atcoder-scheduler-image
